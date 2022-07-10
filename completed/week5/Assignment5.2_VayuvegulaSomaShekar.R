@@ -7,7 +7,7 @@ library(readxl)
 library(dplyr)
 
 #Read data from CSV file
-survey<-read.csv("/Users/somashekarvayuvegula/Documents/Workspace/dsc520/completed/week4/acs-14-1yr-s0201.csv")
+survey<-read.csv("/Users/somashekarvayuvegula/Documents/Workspace/dsc520/completed/week5/acs-14-1yr-s0201.csv")
 head(survey)
 
 #select
