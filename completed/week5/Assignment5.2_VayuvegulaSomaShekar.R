@@ -2,16 +2,15 @@
 # Name: Vayuvegula, Soma Shekar
 # Date: 2022-07-09
 
-#Libraries to read excel and dplyr
-library(readxl)
+#Library to read dplyr
 library(dplyr)
 
 #Read data from CSV file
 survey<-read.csv("/Users/somashekarvayuvegula/Documents/Workspace/dsc520/completed/week5/acs-14-1yr-s0201.csv")
-head(survey)
 
 #select
 survey %>% select(Id, Id2, Geography, PopGroupID, POPGROUP.display.label, RacesReported, HSDegree, BachDegree)
+survey
 
 #Filter
 survey %>% filter(HSDegree > 80)
