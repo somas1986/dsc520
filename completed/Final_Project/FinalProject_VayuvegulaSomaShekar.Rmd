@@ -1,12 +1,12 @@
 ---
 title: "Final_Project"
 author: "Soma Shekar Vayuvegula"
-date: "2022-07-24"
+date: "2022-07-31"
 output:
   html_document:
     df_print: paged
-  pdf_document: default
   word_document: default
+  pdf_document: default
 ---
 
 ## Introduction:
