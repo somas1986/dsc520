@@ -1,19 +1,43 @@
 ---
 title: "InstagramFollowers_FinalProject"
 author: "Soma Shekar Vayuvegula"
-date: "08/07/2022"
+date: "08/13/2022"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
   word_document: default
 ---
 
+## Introduction:
+
+|    Social media is an important arm of the current internet world. Social media not just provides content and entertainment but also has become a good source of income and popularity.
+
+|   With the datasets available from Kaggle, I have processed the data to show which category has is trending per country.
 
 
-# Importing and Cleaning Data
+## Problem statement addressed:
 
-## Instagram Categories Dataset importing
+|     To find a top successful categories of the social media (Instagram) handle per country, which can be used as suggestion to start a new instagram handle which will be successful and profitable.
+
+## Approach:
+
+1. Data Collection
+2. Merging different datasets
+3. Data Cleansing
+4. Data plotting using following plots: 
+    - Scatter plot
+    - Histogram
+    
+## How your approach addresses (fully or partially) the problem:
+
+|    I will be providing a prediction on which category should a person be starting a social media IInstagram) channel in a country of his liking depending on the data provided. 
+
+## Analysis:
+
+# Importing and Cleaning Data:
+
+# Instagram Categories Dataset importing:
 
 ```{r}
 insta_categories <- read.csv('/Users/somashekarvayuvegula/Documents/Workspace/dsc520/completed/Final_Project/data/top_200_instagrammers_categories.csv')
@@ -21,14 +45,14 @@ head(insta_categories)
 head(insta_categories$Main.Category)
 ```
 
-## Instagrammers Details Dataset importing
+# Instagrammers Details Dataset importing
 
 ```{r}
 insta_details <- read.csv('/Users/somashekarvayuvegula/Documents/Workspace/dsc520/completed/Final_Project/data/top_200_instagrammers_details.csv')
 head(insta_details)
 ```
 
-## Instagram Followers and Likes Dataset importing
+# Instagram Followers and Likes Dataset importing
 
 ```{r}
 insta_followers <- read.csv('/Users/somashekarvayuvegula/Documents/Workspace/dsc520/completed/Final_Project/data/top_200_instagrammers_likes_followers_Jul2022.csv')
@@ -36,7 +60,7 @@ insta_followers <- read.csv('/Users/somashekarvayuvegula/Documents/Workspace/dsc
 head(insta_followers)
 ```
 
-## Removing unwanted columns
+# Removing unwanted columns
 
 ```{r}
 insta_followers <- subset (insta_followers, select = -c(Comments.Avg.,Views.Avg.,Avg..1.Day,Avg..3.Day,Avg..7.Day,Avg..14.Day,Avg..30.Day,Engagement.Rate,Engagement.Rate..60.Days.))
@@ -44,7 +68,7 @@ insta_followers <- subset (insta_followers, select = -c(Comments.Avg.,Views.Avg.
 head(insta_followers)
 ```
 
-## Instagram Followers and Likes Dataset importing
+# Instagram Followers and Likes Dataset importing
 
 ```{r}
 library("readxl")
@@ -52,9 +76,9 @@ country_names <- read.csv('/Users/somashekarvayuvegula/Documents/Workspace/dsc52
 head(country_names)
 ```
 
-# Final Dataset
+# Final Dataset:
 
-## Merging all the datasets
+# Merging all the datasets
 
 ```{r}
 df_details_combined <- merge(insta_categories,insta_details,by.x="Username",by.y="Username")
@@ -66,7 +90,7 @@ names(df_final)[names(df_final)=="Main.video.category"] <- "Sub.category"
 head(df_final)
 ```
 
-## Removing the rows for which followers, likes,username, main category, sub category country name are blank
+# Removing the rows for which followers, likes,username, main category, sub category country name are blank
 
 ```{r}
 df_final <- df_final[!(df_final$Username == "" | df_final$Main.Category == ""| df_final$Sub.category == ""| df_final$Likes == ""| df_final$Followers == ""| df_final$Country.name == ""), ]
@@ -74,35 +98,11 @@ df_final <- df_final[!(df_final$Username == "" | df_final$Main.Category == ""| d
 head(df_final)
 ```
 
-# Questions for frture steps
+## Implications :
 
-## What kind of plot are required to show the optimal output
-## What is the optimal form to represent the result
+|  Different plots and tables used to answer the problem statement:
 
-
-# What information is not self-evident?
-
-## After eliminating the missing data, combining based on the Username & country and removing unwanted columns fom the final dataset, final dataset becomes very less comparing to the initial one. The result is going to be based on the available dataset which is relatively very small.
-
-
-# What are different ways you could look at this data?
-
-## We can make the prediction based on the country name, main category, followers and likes but these are not just enough data to predict which category is more successful in a particular country. Please suggest some other way which will be opt in different ways.
-
-
-# How do you plan to slice and dice the data?
-
-## Slicing and dicing the data is happened in the final dataset by merging and eliminating unwanted cloumns.
-
-
-# How could you summarize your data to answer key questions?
-
-## Data has the usenrname, url, country, country name, posts, likes, followers, main category and sub category. Based on these column we can able to answer our questions.
-
-
-# What types of plots and tables will help you to illustrate the findings to your questions?
-
-# Boxplot
+# Boxplot:
 
 ```{r box plot}
 library(ggplot2)
@@ -132,7 +132,7 @@ boxplot + theme(axis.title.x=element_text(colour="DarkGreen",size = 15),
         legend.position = c(1,1),
         legend.justification = c(1,1))
 ```
-# Scatter plot 
+# Scatter plot:
 
 ```{r scatter plot}
 library(ggplot2)
@@ -162,7 +162,7 @@ scatter_plot <- ggplot(data=df_final,aes(x=Main.Category,y=Likes))+geom_point(ae
 scatter_plot
 ```
 
-# Trend lines
+# Trend lines:
 
 ```{r Trend line}
 
@@ -191,7 +191,7 @@ trend_line+theme(axis.title.x=element_text(colour="DarkGreen",size = 15),
         legend.justification = c(1,1))
 ```
 
-# Table with sum and mean of followers based on country and main category
+# Table with sum and mean of followers based on country and main category:
 ```{r}
 library(dplyr)
 
@@ -199,7 +199,7 @@ summarise(group_by(df_final, Country.name, Main.Category), sum(Followers), mean(
 
 ```
 
-# Table with sum and mean of likes based on country and main category
+# Table with sum and mean of likes based on country and main category:
 ```{r}
 library(dplyr)
 
@@ -207,7 +207,7 @@ summarise(group_by(df_final, Country.name, Main.Category), sum(Likes), mean(Like
 
 ```
 
-# Table with sum and mean of followers and likes based on country and main category
+# Table with sum and mean of followers and likes based on country and main category:
 ```{r}
 library(dplyr)
 
@@ -234,6 +234,17 @@ df_final %>%
 
 ```
 
-# Do you plan on incorporating any machine learning techniques to answer your research questions? Explain.
+# Limitations:
 
-## With the help the plot and summarized tables, we can answer our question and there won't be any requirement for machine learning.
+|   As part of data merging and data cleansing, we have lost some data due to missing fields which are very important for analysis. There is a very high probability that we might have missed some Instagram users or categories or countries, with which our predictions could have been different. 
+
+|  For example, with current analysis, for India, Entertainment is the top category. However, with the missing fields being made available, we could have had some other category like, Education topping the list when the margin of differences between two categories is minimal. 
+
+|  I have tried my best to show the data in the tabular format by filtering on country as that was my goal to see which categories top in a country. However, I was not able to sort based on number of followers or number of likes. I would like to implement sorting to make the results much better.
+
+
+# Conclusion:
+
+|  As per the analysis, in India, I have found that Entertainment is the category which has more followers. This process can be used to suggest any person (who is willing to start Instagram account and be an Instagrammer) on which field is most viewed, popular and profitable in the country of his choice.
+
+
